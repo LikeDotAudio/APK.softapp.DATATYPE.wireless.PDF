@@ -1,0 +1,6 @@
+{
+  "name": "Wireless PDF Datatype",
+  "icon": "\ud83d\udcc4",
+  "description": "PDF handling for wireless schemas.",
+  "app": "index.html"
+}
