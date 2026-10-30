@@ -8,4 +8,5 @@ How to use it and how it is built.
 | Page | What |
 |---|---|
 | [ARCHITECTURE.md](ARCHITECTURE.md) | DATATYPE.wireless.PDF architecture |
+| [SMOKE.md](SMOKE.md) | Smoke test — DATATYPE.wireless.PDF |
 <!-- /wiki:index -->

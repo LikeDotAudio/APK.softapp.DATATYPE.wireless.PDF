@@ -10,3 +10,7 @@ every conversion raises instead of returning an empty table.
 - [Delivery](Documentation/🌍Publishing/DELIVERY.md) — the repository, what the images carry, and where it lands.
 
 Remote: https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.PDF
+
+<!-- wiki:smoke -->
+**Smoke test** — ✅ PASS 1/1 since 2026-10-30 13:09 EDT — [results](Documentation/%F0%9F%A7%A9Manual%20and%20Artifacts/SMOKE.md)
+<!-- /wiki:smoke -->
