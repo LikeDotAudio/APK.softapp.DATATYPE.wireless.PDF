@@ -5,8 +5,8 @@
 The OS lists Softapps from `PODS/POD.THIN/OS/system/project-apps.json`, which `walk_project()`
 (`PODS/POD.THIN/WEB.OsApi/SRC/server.py:3842`) builds from the checkout. Under Softapps it reads
 `name`, `icon` and `description` from `display.json` and opens `entry` or the first entry file it
-finds (`APP_ENTRY_MARKERS`, `server.py:3814`); `app` is inert there (`server.py:2758`). This folder
-has neither, so "Wireless PDF Datatype" is listed as a declared `folder` app and opens the folder.
+finds (`APP_ENTRY_MARKERS`). This folder has no page, so its `display.json` declares no `entry` and
+no `app`, and the walker finds no entry file either, so "Wireless PDF Datatype" is listed as a declared `folder` app and opens the folder.
 
 The importer is a Python module loaded by path, the way the status test does it. It needs
 `PODS/POD.THICK/NODE.BareMetal/SRC/Core` on `PYTHONPATH` for `importer_logging`, and the compiled

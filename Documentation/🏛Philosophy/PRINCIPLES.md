@@ -44,5 +44,5 @@ rather than pretending.
   `Tests/test_handler_status.py` is now `Core/TEST:runner:PYTHON/test_handler_status.py`.
 - Nothing in the monorepo calls this importer at run time; only the status test loads it. The
   Softapp Python is also excluded from every image (`.dockerignore:81`).
-- `display.json:5` names `"app": "index.html"`, and there is no `index.html`. Under Softapps the
-  launcher ignores `app`, finds no entry file, and lists the folder itself.
+- There is no page: `display.json` names no `app` (it once named a missing `index.html`), the
+  launcher finds no entry file, and lists the folder itself.
