@@ -1,0 +1,12 @@
+# DATATYPE.wireless.PDF
+
+The SoundBase PDF importer among the wireless datatypes: `IMPORT:file:PDF/Entry.py` extracts a
+report's text through the Rust `PDFEngine` in `oaRustCore`, and is meant to turn it into the shared
+six-column marker table. The row parser is not written; the module declares `STATUS = "stub"` and
+every conversion raises instead of returning an empty table.
+
+- [Principles](Documentation/🏛Philosophy/PRINCIPLES.md) — the rules it keeps, and where it breaks them.
+- [Architecture](Documentation/🧩Manual and Artifacts/ARCHITECTURE.md) — how it is loaded, its parts, and what a conversion does.
+- [Delivery](Documentation/🌍Publishing/DELIVERY.md) — the repository, what the images carry, and where it lands.
+
+Remote: https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.PDF
