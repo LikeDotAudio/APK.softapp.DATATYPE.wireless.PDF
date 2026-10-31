@@ -43,13 +43,13 @@ The table may continue on the next page with no header: the last section carries
 The OS lists Softapps from `PODS/POD.THIN/OS/system/project-apps.json`, which `walk_project()`
 (`PODS/POD.THIN/WEB.OsApi/SRC/server.py`) builds from the checkout from `display.json`.
 
-`IMPORT:file:PDF/Entry.py` is the old desktop edge, kept a declared stub. It needs one package,
+`IMPORT.file.PDF/Entry.py` is the old desktop edge, kept a declared stub. It needs one package,
 `apk-wireless-import` (DATATYPE.wireless.CSV/SRC/python, pinned by rev in
-`IMPORT:file:PDF/requirements.txt`), and — for text extraction only — the compiled `oaRustCore`
-(built from NODE.BareMetal `Core/CORE:engine:RUST`):
+`IMPORT.file.PDF/requirements.txt`), and — for text extraction only — the compiled `oaRustCore`
+(built from NODE.BareMetal `Core/CORE.engine.RUST`):
 
 ```sh
-cd "PODS/POD.THIN/Softapps/DATATYPE/DATATYPE.wireless.PDF/IMPORT:file:PDF"
+cd "PODS/POD.THIN/Softapps/DATATYPE/DATATYPE.wireless.PDF/IMPORT.file.PDF"
 python3 -m pytest -q Tests        # 9 tests; conftest finds apk_wireless_import (installed, $APK_WIRELESS_IMPORT_DIR, or the sibling checkout)
 ```
 
@@ -60,14 +60,14 @@ python3 -m pytest -q Tests        # 9 tests; conftest finds apk_wireless_import 
 | Parser crate | `SRC/importer/` | `apkaudio-wireless-soundbase-pdf`: `parse_soundbase_pdf(bytes, name)`, `parse_soundbase_pdf_file(path)`; pure. `tests/fixture.rs` holds `fixtures/SB PDF.pdf` against `fixtures/SB PDF.csv` (copies of DATATYPE.wireless.SOUNDbase's `test_data/`, inside `SRC/` so the image builds from `SRC/` alone). |
 | Worker | `SRC/` | `apk-worker-wireless-pdf`: `handle_job`, `run_job_agent` (the runner's `JobWorker`), `self_test.rs`, `config.ini` (`[wireless_pdf]`), `check.sh`, the two bins. |
 | Stack | `Docker/` | `Dockerfile` (build context `SRC/`, private git deps by BuildKit secret `apk_deps_token`) and `docker-compose.yml` (service `wireless-pdf`, container `Worker-WIRELESS_PDF`), included by `PODS/POD.workers/Docker/docker-compose.yml`. |
-| Python edge | `IMPORT:file:PDF/Entry.py` | `STATUS`, `extract_text`, the v1/v2 converters and their legacy aliases; `MARKER_HEADERS` and the `start`/`stop`/`status`/`run_tests` lifecycle come from `apk_wireless_import` (`Lifecycle(STATUS)`: a stub's `run_tests()` is False). |
-| Tests | `IMPORT:file:PDF/Tests/` | `test_entry.py` (STATUS is "stub", conversion raises on the fixture, run_tests False, the shared header row) and `Assets/soundbase_report.pdf`, a one-page fixture. |
-| Dependency | `IMPORT:file:PDF/requirements.txt` | `apk-wireless-import` at a DATATYPE.wireless.CSV rev. |
+| Python edge | `IMPORT.file.PDF/Entry.py` | `STATUS`, `extract_text`, the v1/v2 converters and their legacy aliases; `MARKER_HEADERS` and the `start`/`stop`/`status`/`run_tests` lifecycle come from `apk_wireless_import` (`Lifecycle(STATUS)`: a stub's `run_tests()` is False). |
+| Tests | `IMPORT.file.PDF/Tests/` | `test_entry.py` (STATUS is "stub", conversion raises on the fixture, run_tests False, the shared header row) and `Assets/soundbase_report.pdf`, a one-page fixture. |
+| Dependency | `IMPORT.file.PDF/requirements.txt` | `apk-wireless-import` at a DATATYPE.wireless.CSV rev. |
 | Launcher manifest | `display.json` | Name, icon, description, category `DATATYPE`, `entry` = the parser crate, `requires` the `wireless_pdf` worker and the broker (the SoundBase sibling's shape). |
 
 Outside this repository: the PDF engine is
-`PODS/POD.THICK/NODE.BareMetal/SRC/Core/CORE:engine:RUST/PARSER/pdf_parser.rs`, registered as
-`oaRustCore.pdf_parser` (`CORE:engine:RUST/lib.rs:225`). The SoundBase importer that reads CSV
+`PODS/POD.THICK/NODE.BareMetal/SRC/Core/CORE.engine.RUST/PARSER/pdf_parser.rs`, registered as
+`oaRustCore.pdf_parser` (`CORE.engine.RUST/lib.rs:225`). The SoundBase importer that reads CSV
 exports of these reports, and owns the channel record this crate returns, is `DATATYPE.wireless.SOUNDbase/SRC/importer` (`apkaudio-wireless-soundbase`).
 
 ## Data flow (Python edge)

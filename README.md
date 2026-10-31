@@ -12,7 +12,7 @@ records (`group, model, band, name, preset, spacing, frequency_mhz`) — the sam
 | `SRC/importer/` | the parser crate `apkaudio-wireless-soundbase-pdf`: positioned glyphs → lines → the table by its header row; `tests/fixture.rs` holds `fixtures/SB PDF.pdf` to `fixtures/SB PDF.csv` field for field |
 | `SRC/` | the worker `apk-worker-wireless-pdf` (runner job loop, wireless kernel envelope, self test, `config.ini` `[wireless_pdf]`) and `check.sh` |
 | `Docker/` | the worker stack, included by `PODS/POD.workers/Docker/docker-compose.yml` |
-| `IMPORT:file:PDF/Entry.py` | the old Python edge, still a declared stub (`STATUS = "stub"`) |
+| `IMPORT.file.PDF/Entry.py` | the old Python edge, still a declared stub (`STATUS = "stub"`) |
 
 ```bash
 bash SRC/check.sh

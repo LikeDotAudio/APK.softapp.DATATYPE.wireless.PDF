@@ -11,7 +11,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 cargo test --workspace --locked
 if python3 -c "import pytest" 2>/dev/null; then
-  (cd "../IMPORT:file:PDF" && python3 -m pytest -q Tests)
+  (cd "../IMPORT.file.PDF" && python3 -m pytest -q Tests)
 else
   echo "check.sh: pytest not installed — Python edge not run" >&2
 fi

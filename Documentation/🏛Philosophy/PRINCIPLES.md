@@ -5,7 +5,7 @@ the SoundBase CSV export gives: group, model, band, name, preset, spacing and fr
 frequency. Since LOOSE-workers-convert-rest it does that as a worker on the bus,
 `Worker-WIRELESS_PDF` (module `wireless_pdf`, pod `PODS/POD.workers`): the parser is the Rust crate
 `SRC/importer/` (`apkaudio-wireless-soundbase-pdf`), behind the runner's job loop in `SRC/`. The old
-Python edge, `IMPORT:file:PDF/Entry.py`, is kept as the declared stub it was.
+Python edge, `IMPORT.file.PDF/Entry.py`, is kept as the declared stub it was.
 
 ## The rules it keeps
 
@@ -29,7 +29,7 @@ Python edge, `IMPORT:file:PDF/Entry.py`, is kept as the declared stub it was.
 6. **The self test runs the real thing.** `SRC/src/self_test.rs` sends the fixture PDF, compiled
    into the binary, through `handle_job` and passes only on 20 channels, 0 skipped.
 7. **A stub says so.** The Python edge keeps `STATUS = "stub"`, raises rather than returning an
-   empty table, and its `run_tests()` is `False` (`IMPORT:file:PDF/Tests/test_entry.py`).
+   empty table, and its `run_tests()` is `False` (`IMPORT.file.PDF/Tests/test_entry.py`).
 
 ## Where it breaks them
 

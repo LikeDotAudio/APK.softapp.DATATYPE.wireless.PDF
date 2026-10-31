@@ -13,8 +13,8 @@
 # on the record renders as a blank column: no error, no log line, and it reads
 # as a broken parser." An empty result from a real file must raise.
 #
-# The import name is a contract with NODE.BareMetal `SRC/Core/CORE:engine:RUST/lib.rs`;
-# see the note in DATATYPE.wireless.IAS `IMPORT:file:HTML/Entry.py`. This module spent its life importing
+# The import name is a contract with NODE.BareMetal `SRC/Core/CORE.engine.RUST/lib.rs`;
+# see the note in DATATYPE.wireless.IAS `IMPORT.file.HTML/Entry.py`. This module spent its life importing
 # `oa_pdf_parser_rs` while the directory was named `XXXoa_pdf_parser_rs` and
 # therefore outside the crate's module tree, so every call raised while
 # `status()` reported "Running with Rust Engine".

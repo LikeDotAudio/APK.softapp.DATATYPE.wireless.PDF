@@ -4,14 +4,14 @@ Audited against the APK.audio multi-repo architecture standard: coupling, bounda
 ← [Audits](INDEX.md) · Improvements: [🛣Roadmap/IMPROVEMENTS.md](../%F0%9F%9B%A3Roadmap/IMPROVEMENTS.md)
 
 ## Bounded context
-The SoundBase PDF report dialect, from report to the six-column wireless marker table. Python, 77 lines (`IMPORT:file:PDF/Entry.py`) plus `display.json`. Text extraction works through the Rust `oaRustCore.pdf_parser.PDFEngine`. The row parser is not written, the module declares `STATUS = "stub"`, and every conversion raises.
+The SoundBase PDF report dialect, from report to the six-column wireless marker table. Python, 77 lines (`IMPORT.file.PDF/Entry.py`) plus `display.json`. Text extraction works through the Rust `oaRustCore.pdf_parser.PDFEngine`. The row parser is not written, the module declares `STATUS = "stub"`, and every conversion raises.
 
-**Sampled:** every tracked file, plus the test that exercises it (`PODS/POD.THICK/NODE.BareMetal/SRC/Core/TEST:runner:PYTHON/test_handler_status.py`) and the sibling importers `DATATYPE.wireless.IAS` and `DATATYPE.wireless.SHUREwirelessWorkbench`.
+**Sampled:** every tracked file, plus the test that exercises it (`PODS/POD.THICK/NODE.BareMetal/SRC/Core/TEST.runner.PYTHON/test_handler_status.py`) and the sibling importers `DATATYPE.wireless.IAS` and `DATATYPE.wireless.SHUREwirelessWorkbench`.
 
 ## Context map
 | Talks to | How (topic / endpoint / file / import) | Relationship |
 |---|---|---|
-| `oaRustCore` (built from `NODE.BareMetal/SRC/Core/CORE:engine:RUST`) | `from oaRustCore.pdf_parser import PDFEngine` (`Entry.py:30-34`) | Customer–Supplier (in-process) |
+| `oaRustCore` (built from `NODE.BareMetal/SRC/Core/CORE.engine.RUST`) | `from oaRustCore.pdf_parser import PDFEngine` (`Entry.py:30-34`) | Customer–Supplier (in-process) |
 | `importer_logging` (in `NODE.BareMetal/SRC/Core`) | `from importer_logging import matrix_log` (`Entry.py:26`); needs that folder on `PYTHONPATH` | Conformist |
 | DataMigration (caller) | `MARKER_HEADERS` and the `convert_*` / legacy `Marker_convert_*` functions | Published Language (marker table) |
 | `NODE.BareMetal` status test | loads this file by path (`test_handler_status.py:49`) and asserts `STATUS` | Customer (test lives outside this repo) |
