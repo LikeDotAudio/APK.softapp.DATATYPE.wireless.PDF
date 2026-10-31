@@ -1,40 +1,42 @@
 # DATATYPE.wireless.PDF principles
 
-DATATYPE.wireless.PDF exists to read a SoundBase PDF frequency report into the marker table that
-the wireless data migration wants: zone, group, device, name, frequency and peak, one row per
-microphone or IEM channel. It is a Python importer, `IMPORT:file:PDF/Entry.py`, with the same shape
-as its CSV, IAS (HTML) and Shure Workbench (SHOW) siblings. Text extraction is done by the Rust
-`PDFEngine` in `oaRustCore`; turning that text into rows is not written yet, and the module says so
-rather than pretending.
+DATATYPE.wireless.PDF exists to read a SoundBase PDF frequency report into the same channel records
+the SoundBase CSV export gives: group, model, band, name, preset, spacing and frequency, one row per
+frequency. Since LOOSE-workers-convert-rest it does that as a worker on the bus,
+`Worker-WIRELESS_PDF` (module `wireless_pdf`, pod `PODS/POD.workers`): the parser is the Rust crate
+`SRC/importer/` (`apkaudio-wireless-soundbase-pdf`), behind the runner's job loop in `SRC/`. The old
+Python edge, `IMPORT:file:PDF/Entry.py`, is kept as the declared stub it was.
 
 ## The rules it keeps
 
-1. **A stub says so in a constant, and a test asserts it.** `STATUS = "stub"` in
-   `IMPORT:file:PDF/Entry.py`, and `status()` returns exactly that constant.
-   `test_the_pdf_is_still_declared_a_stub` (`IMPORT:file:PDF/Tests/test_entry.py`) holds it here;
-   NODE.BareMetal's `TEST:runner:PYTHON/test_handler_status.py` holds it as the consumer.
-2. **An unimplemented parser raises; it never returns an empty table.**
-   `convert_soundbase_pdf_v1_to_markers` extracts the text and then raises `NotImplementedError`,
-   because a header with no rows reads as a broken parser with no error.
-   `test_conversion_refuses_rather_than_returning_no_rows` runs it on `Tests/Assets/soundbase_report.pdf`.
-3. **One header row for every wireless importer, one copy.** `MARKER_HEADERS` is
-   `apk_wireless_import.MARKER_HEADERS` — the same object the IAS and Shure edges import
-   (`test_the_header_row_is_the_shared_one`).
-4. **A self test never passes for having run nothing.** `run_tests()` is the shared `Lifecycle`'s:
-   `False` for a stub (`test_a_stub_never_passes_run_tests`).
-5. **The PDF is read by Rust, with no silent Python fallback.** The engine is imported from
-   `oaRustCore.pdf_parser`; when it is missing, `extract_text` raises `RuntimeError("Rust PDF parser required")`.
-6. **The v2 entry point does not invent a second parser.** `convert_soundbase_pdf_v2_to_markers`
-   calls v1, and the two legacy names are aliases.
+1. **One record out, whatever came in.** A row is DATATYPE.wireless.SOUNDbase's `SoundbaseChannel`
+   and the result its `SoundbaseParseResult` (that crate by git rev), so the PDF and the CSV export
+   of one report read the same. `the_pdf_reads_as_its_csv_export` (`SRC/importer/tests/fixture.rs`)
+   holds every field of all 20 rows of `fixtures/SB PDF.pdf` against `fixtures/SB PDF.csv`;
+   `the_result_shape_is_pinned` (`SRC/src/lib.rs`) holds the wire keys.
+2. **Rows come from the report's own layout, not from guessed text.** Glyphs keep their page
+   positions; the header row names the columns; a row is anchored on its frequency and wrapped
+   cells join their row by distance (`SRC/importer/src/lib.rs` header). Only text in the header
+   row's font size is table text, so a running title over the Frequency column is never a row.
+3. **A file that is not a report is an error, never an empty table.** Not a PDF, an unreadable PDF,
+   or a PDF with no header row comes back `ok: false` with the reason
+   (`what_is_not_a_pdf_is_answered_not_ok`, `a_bad_job_is_answered_not_dropped`). A malformed font
+   that panics the extractor is caught and answered (`catch_unwind` in `glyphs`).
+4. **The band rule is the kernel's.** A frequency counts only inside 100–3000 MHz
+   (`apkaudio_wireless_kernel::usable_mhz_text`); the status word is `import_status`.
+5. **A job is answered, always, under its id, and nothing is retained.** The envelope is the
+   wireless kernel's `job` module, shared with the CSV, IAS, SoundBase and WWB workers.
+6. **The self test runs the real thing.** `SRC/src/self_test.rs` sends the fixture PDF, compiled
+   into the binary, through `handle_job` and passes only on 20 channels, 0 skipped.
+7. **A stub says so.** The Python edge keeps `STATUS = "stub"`, raises rather than returning an
+   empty table, and its `run_tests()` is `False` (`IMPORT:file:PDF/Tests/test_entry.py`).
 
 ## Where it breaks them
 
-- **The row parser does not exist.** Every conversion raises. This is declared, not hidden, but it
-  is the module's whole purpose.
-- When `oaRustCore` is missing, `STATUS` still reads `"stub"` where the other edges say
-  `"unavailable"`. Kept by design: the parser is what is missing either way, and "stub" is the
-  word the consumer test pins.
-- Nothing in the monorepo calls this importer at run time; only the tests load it. The
-  Softapp Python is also excluded from every image (`.dockerignore:81`).
-- There is no page: `display.json` names no `app` (it once named a missing `index.html`), the
-  launcher finds no entry file, and lists the folder itself.
+- **The dialect is one fixture deep.** The parser is written against one SoundBase report
+  (`fixtures/SB PDF.pdf`). Name and Preset are empty in it, so their columns are mapped by header
+  position but not yet seen filled.
+- **No page posts a PDF yet.** The Data Migration *Soundbase* frame sends the CSV export as text to
+  `wireless_soundbase`; nothing in the GUI sends a PDF as `content_b64` to `wireless_pdf`.
+- The Python edge is still a stub that nothing calls at run time, excluded from every image
+  (`.dockerignore:81`).

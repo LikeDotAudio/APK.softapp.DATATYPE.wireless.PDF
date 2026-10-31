@@ -2,7 +2,18 @@
 
 - **Repository:** https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.PDF (private), a
   submodule of the APK.audio monorepo at `PODS/POD.THIN/Softapps/DATATYPE/DATATYPE.wireless.PDF`.
-- **Build:** the Python needs no build. Its text extraction needs `oaRustCore`, which is built from
+- **The worker:** image `worker-wireless-pdf:local`, built from this repository's `SRC/` alone by
+  `Docker/Dockerfile` (runner and contracts from APK.plugin.SDK `sdk-v0.7`; the wireless kernel and
+  the SoundBase record from the private DATATYPE.wireless.CSV and DATATYPE.wireless.SOUNDbase by
+  pinned rev, fetched with `APK_DEPS_TOKEN` as a BuildKit secret). It runs as `Worker-WIRELESS_PDF`
+  in project `workers`, included by `PODS/POD.workers/Docker/docker-compose.yml`, on the broker's
+  network with no port:
+  `APK_DEPS_TOKEN=$(gh auth token) docker compose -f PODS/POD.workers/Docker/docker-compose.yml up -d --build wireless-pdf`.
+- **Worker tested:** `bash SRC/check.sh` (cargo test --workspace --locked: worker 8, parser 2 +
+  fixture 1; then pytest). Measured 2026-10-31 over the bus: `fixtures/SB PDF.pdf` sent as a
+  `content_b64` job came back `ok: true`, `Soundbase_PDF_Report`, 20 channels, 0 skipped, the
+  first `ADTQ / G57 - Narrowband / 0.925 / 566.6` and the last `AD4D-A / G57 / 2.900 / 603.325`.
+- **Build:** the Python edge needs no build. Its text extraction needs `oaRustCore`, which is built from
   `PODS/POD.THICK/NODE.BareMetal/SRC/Core/CORE:engine:RUST` and is not part of this repository.
 - **Images:** `PODS/POD.THIN/WEB.Frontend-Assets/Docker/Dockerfile` copies the whole
   `PODS/POD.THIN/Softapps` tree to `/srv/www/Softapps` (web-static). The root `.dockerignore`
@@ -18,7 +29,8 @@
   under the NODE.BareMetal `Core` Python path.
 - **Tested:** by hand — `python3 -m pytest -q Tests` in `IMPORT:file:PDF/` (9 passed 2026-10-30);
   NODE.BareMetal's `TEST:runner:PYTHON/test_handler_status.py` is the consumer check.
-- **After an edit:** run the tests above, then
+- **After an edit:** for `SRC/`, `bash SRC/check.sh` and rebuild the worker with the compose line
+  above. For the rest, run the tests above, then
   `PODS/POD.manager/MANAGER.Docktor/K8/up-stack.sh WEB.Frontend-Assets` if `display.json` changed.
   A `DATABASE.server.SQL` rebuild is no longer needed for Softapps since PLAN-3421.01. Commit in
   this repository, then bump the submodule pointer in APK.audio.

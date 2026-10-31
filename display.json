@@ -1,5 +1,16 @@
 {
   "name": "Wireless PDF Datatype",
-  "icon": "\ud83d\udcc4",
-  "description": "PDF handling for wireless schemas."
+  "category": "DATATYPE",
+  "icon": "📄",
+  "description": "SoundBase PDF frequency report importer: reads the report's table by its header row into the SoundBase channel records and answers each job posted to APK.audio/System/Protocols/wireless_pdf/outgoing/job on .../wireless_pdf/incoming/result.",
+  "entry": "SRC/importer/src/lib.rs",
+  "tech": "rust",
+  "requires": {
+    "plugins": [
+      "wireless_pdf"
+    ],
+    "services": [
+      "broker"
+    ]
+  }
 }

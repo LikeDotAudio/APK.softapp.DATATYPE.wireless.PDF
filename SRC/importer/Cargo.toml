@@ -1,0 +1,28 @@
+# apkaudio-wireless-soundbase-pdf — the SoundBase PDF frequency report parser, as a crate.
+#
+# Owns: the SoundBase PDF dialect — positioned glyphs out of the PDF
+# (pdf-extract's OutputDev), lines and words out of the glyphs, and rows out of
+# the words by the report's own header row. Pure: no bus, no runner.
+#
+# ONE RECORD OUT: a row is DATATYPE.wireless.SOUNDbase's `SoundbaseChannel` and
+# the whole parse its `SoundbaseParseResult` (that crate, by git rev), so a
+# SoundBase report reads the same whether it arrived as the CSV export or as
+# the PDF. The band rule and the status word are the wireless kernel's
+# (apkaudio-wireless-kernel, DATATYPE.wireless.CSV/SRC/kernel, by git rev) —
+# the same revs the SoundBase worker pins, so one copy of each in the lock.
+[package]
+name = "apkaudio-wireless-soundbase-pdf"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "apkaudio_wireless_soundbase_pdf"
+path = "src/lib.rs"
+
+[dependencies]
+apkaudio-wireless-kernel = { git = "https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.CSV", rev = "646e960e42ec13f2c39e4100a9019da9e4f632f6" }
+apkaudio-wireless-soundbase = { git = "https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.SOUNDbase", rev = "80616818f0ce2eb71f495aabf5193d1d1c657e62" }
+pdf-extract = "0.7"
+
+[dev-dependencies]
+csv = "1.3"

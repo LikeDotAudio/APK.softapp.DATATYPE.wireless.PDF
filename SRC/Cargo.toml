@@ -1,0 +1,49 @@
+# apk-worker-wireless-pdf — the SoundBase PDF frequency report importer as a worker on the bus
+# (LOOSE-workers-convert-rest: the last desktop tool converted to a POD.workers job).
+#
+# Owns: the container entry point that answers `outgoing/job` with
+# `incoming/result` by running the parser crate beside it (`importer/`,
+# apkaudio-wireless-soundbase-pdf). The job loop is the runner's
+# (`apk_plugin_runner::jobs::JobWorker`); the envelope — job_id, text |
+# content_b64, size limit, the versioned answer — is the wireless kernel's
+# (apkaudio-wireless-kernel, DATATYPE.wireless.CSV/SRC/kernel, feature `worker`).
+#
+# BUILT ON apk-plugin-runner, the crate every THICK plugin links: it publishes
+# the config, the last will, the self-test door and the retained `incoming/api`
+# description; this crate adds only the job loop.
+#
+# ITS OWN WORKSPACE, not a member of DISCOVERY.Engine's: a worker builds its
+# own image, so a broken worker never fails the plugin build and the reverse.
+#
+# THE SDK BY TAG, like every THICK plugin and the three wireless siblings:
+# runner and contracts from APK.plugin.SDK `sdk-v0.7`, the wireless kernel from
+# DATATYPE.wireless.CSV and the SoundBase record from DATATYPE.wireless.SOUNDbase
+# by pushed revs. The image builds from `SRC/` alone.
+[package]
+name = "apk-worker-wireless-pdf"
+version = "0.1.0"
+edition = "2024"
+
+[workspace]
+
+[lib]
+name = "apk_worker_wireless_pdf"
+path = "src/lib.rs"
+
+[dependencies]
+apk-plugin-runner = { git = "https://github.com/LikeDotAudio/APK.plugin.SDK", tag = "sdk-v0.7" }
+apkaudio-contracts = { git = "https://github.com/LikeDotAudio/APK.plugin.SDK", tag = "sdk-v0.7" }
+apkaudio-wireless-soundbase-pdf = { path = "importer" }
+apkaudio-wireless-kernel = { git = "https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.CSV", rev = "646e960e42ec13f2c39e4100a9019da9e4f632f6", features = ["worker"] }
+serde_json = "1"
+# The self test sends the fixture as a real content_b64 job.
+base64 = "0.22"
+
+[[bin]]
+name = "apk-worker-wireless-pdf"
+path = "src/bin/apk-worker-wireless-pdf.rs"
+
+# The compose healthcheck: one line over `apk_plugin_runner::health_check()`.
+[[bin]]
+name = "apk-plugin-health"
+path = "src/bin/apk-plugin-health.rs"
