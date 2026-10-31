@@ -9,40 +9,32 @@ rather than pretending.
 
 ## The rules it keeps
 
-1. **A stub says so in a constant, and a test asserts it.** `STATUS = "stub"`
-   (`IMPORT:file:PDF/Entry.py:38`), and `status()` returns exactly that constant
-   (`IMPORT:file:PDF/Entry.py:73`). `test_pdf_is_still_declared_a_stub` in
-   `PODS/POD.THICK/NODE.BareMetal/SRC/Core/TEST:runner:PYTHON/test_handler_status.py:70` holds it.
+1. **A stub says so in a constant, and a test asserts it.** `STATUS = "stub"` in
+   `IMPORT:file:PDF/Entry.py`, and `status()` returns exactly that constant.
+   `test_the_pdf_is_still_declared_a_stub` (`IMPORT:file:PDF/Tests/test_entry.py`) holds it here;
+   NODE.BareMetal's `TEST:runner:PYTHON/test_handler_status.py` holds it as the consumer.
 2. **An unimplemented parser raises; it never returns an empty table.**
-   `convert_soundbase_pdf_v1_to_markers` extracts the text and then raises `NotImplementedError`
-   (`IMPORT:file:PDF/Entry.py:53`), because a header with no rows reads as a broken parser with no
-   error. The status test checks the raise (`test_handler_status.py:78`).
-3. **One header row for every wireless importer.** `MARKER_HEADERS`
-   (`IMPORT:file:PDF/Entry.py:28`) is the same six columns as the other importers;
-   `test_marker_headers_agree_across_importers` (`test_handler_status.py:88`) compares them.
-4. **The PDF is read by Rust, with no silent Python fallback.** The engine is imported from
-   `oaRustCore.pdf_parser` (`IMPORT:file:PDF/Entry.py:31`); when it is missing, `extract_text`
-   raises `RuntimeError("Rust PDF parser required")` (`IMPORT:file:PDF/Entry.py:45`).
-5. **The v2 entry point does not invent a second parser.** `convert_soundbase_pdf_v2_to_markers`
-   calls v1 (`IMPORT:file:PDF/Entry.py:60`), and the two legacy names are aliases
-   (`IMPORT:file:PDF/Entry.py:64`-`IMPORT:file:PDF/Entry.py:65`).
+   `convert_soundbase_pdf_v1_to_markers` extracts the text and then raises `NotImplementedError`,
+   because a header with no rows reads as a broken parser with no error.
+   `test_conversion_refuses_rather_than_returning_no_rows` runs it on `Tests/Assets/soundbase_report.pdf`.
+3. **One header row for every wireless importer, one copy.** `MARKER_HEADERS` is
+   `apk_wireless_import.MARKER_HEADERS` — the same object the IAS and Shure edges import
+   (`test_the_header_row_is_the_shared_one`).
+4. **A self test never passes for having run nothing.** `run_tests()` is the shared `Lifecycle`'s:
+   `False` for a stub (`test_a_stub_never_passes_run_tests`).
+5. **The PDF is read by Rust, with no silent Python fallback.** The engine is imported from
+   `oaRustCore.pdf_parser`; when it is missing, `extract_text` raises `RuntimeError("Rust PDF parser required")`.
+6. **The v2 entry point does not invent a second parser.** `convert_soundbase_pdf_v2_to_markers`
+   calls v1, and the two legacy names are aliases.
 
 ## Where it breaks them
 
 - **The row parser does not exist.** Every conversion raises. This is declared, not hidden, but it
   is the module's whole purpose.
-- `IMPORT:file:PDF/Entry.py:26` imports `importer_logging`, which lives only in
-  `PODS/POD.THICK/NODE.BareMetal/SRC/Core/`. The file cannot be imported from this repository, or
-  from anywhere without that directory on `PYTHONPATH`.
-- `run_tests()` returns `True` unconditionally (`IMPORT:file:PDF/Entry.py:75`), so a caller asking
-  the module to test itself is told it passed.
-- When `oaRustCore` is missing, `STATUS` still reads `"stub"`. The status test's own header says
-  the importers degrade to `"unavailable"` on a machine without the Rust build; this one does not.
-- The header comment names paths that moved: `oaFileImportHTML/Entry.py` is now
-  `DATATYPE.wireless.IAS/IMPORT:file:HTML/Entry.py`, `src/lib.rs` is now
-  `PODS/POD.THICK/NODE.BareMetal/SRC/Core/CORE:engine:RUST/lib.rs`, and
-  `Tests/test_handler_status.py` is now `Core/TEST:runner:PYTHON/test_handler_status.py`.
-- Nothing in the monorepo calls this importer at run time; only the status test loads it. The
+- When `oaRustCore` is missing, `STATUS` still reads `"stub"` where the other edges say
+  `"unavailable"`. Kept by design: the parser is what is missing either way, and "stub" is the
+  word the consumer test pins.
+- Nothing in the monorepo calls this importer at run time; only the tests load it. The
   Softapp Python is also excluded from every image (`.dockerignore:81`).
 - There is no page: `display.json` names no `app` (it once named a missing `index.html`), the
   launcher finds no entry file, and lists the folder itself.

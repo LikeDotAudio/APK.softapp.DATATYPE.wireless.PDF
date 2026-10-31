@@ -16,7 +16,17 @@
   path through :8080; web-static's nginx would answer a `.py` with 404 in any case
   (`PODS/POD.THIN/WEB.Frontend-Assets/Docker/nginx.conf:46`). The importer runs only from a checkout,
   under the NODE.BareMetal `Core` Python path.
-- **After an edit:** run the status test above, then
+- **Tested:** by hand — `python3 -m pytest -q Tests` in `IMPORT:file:PDF/` (9 passed 2026-10-30);
+  NODE.BareMetal's `TEST:runner:PYTHON/test_handler_status.py` is the consumer check.
+- **After an edit:** run the tests above, then
   `PODS/POD.manager/MANAGER.Docktor/K8/up-stack.sh WEB.Frontend-Assets` if `display.json` changed.
   A `DATABASE.server.SQL` rebuild is no longer needed for Softapps since PLAN-3421.01. Commit in
   this repository, then bump the submodule pointer in APK.audio.
+
+## Delivered from the 2026-10-30 audit
+
+- **One shared header row and lifecycle** — `MARKER_HEADERS` and `start`/`stop`/`status`/`run_tests` come from `apk_wireless_import` (DATATYPE.wireless.CSV/SRC/python, package `apk-wireless-import`), the one copy the IAS, PDF, Shure and CSV edges import; the three verbatim copies are gone. Verified by `Tests/test_entry.py` (the header row *is* the shared object).
+- **run_tests() no longer lies** — `Lifecycle(STATUS)`: a stub's `run_tests()` is `False` (it returned `True` unconditionally). Pinned by `test_a_stub_never_passes_run_tests`.
+- **Tests at home** — `IMPORT:file:PDF/Tests/` with a one-page fixture PDF: STATUS is "stub", both converters raise on it, text extraction needs the engine (9 passed). NODE.BareMetal's `test_handler_status.py` stays as the consumer check (handoff filed so it puts the shared package on its path).
+- **No PYTHONPATH into NODE.BareMetal** — `Entry.py` no longer imports `importer_logging`; logging is `apk_wireless_import.log` (oaLogging when present, else nothing). The dependency is declared as a package by rev in `requirements.txt`.
+- **Doc drift and comment noise** — ARCHITECTURE's `display.json` row says what the file holds (no `app`), the `# Inline comment: Logic for …` lines are gone, and the header's moved paths are corrected.
