@@ -35,6 +35,10 @@
   A `DATABASE.server.SQL` rebuild is no longer needed for Softapps since PLAN-3421.01. Commit in
   this repository, then bump the submodule pointer in APK.audio.
 
+## Not automated
+
+- **SoundBase Name/Preset columns are untested with real values.** The one SoundBase report in `SRC/importer/fixtures/` has those two columns empty in every row, so their mappings parse but are unproven. The owner has no second export with them filled (2026-10-31); when one turns up, add it beside the first fixture with a test asserting a filled Name and Preset. (Was roadmap loose end LOOSE-soundbase-pdf-second-fixture.)
+
 ## Delivered 2026-10-31: portable file names (no `:` `|` or case twins)
 
 - The monorepo now checks out on Windows and macOS: no tracked name holds `<>:"|?*`, a trailing dot or space, a device name or a case-only twin. Colon folders became dot folders (the POD.x convention).
