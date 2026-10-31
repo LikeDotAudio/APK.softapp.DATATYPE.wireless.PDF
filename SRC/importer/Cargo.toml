@@ -12,7 +12,7 @@
 # the same revs the SoundBase worker pins, so one copy of each in the lock.
 [package]
 name = "apkaudio-wireless-soundbase-pdf"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 
 [lib]
@@ -20,8 +20,8 @@ name = "apkaudio_wireless_soundbase_pdf"
 path = "src/lib.rs"
 
 [dependencies]
-apkaudio-wireless-kernel = { git = "https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.CSV", rev = "646e960e42ec13f2c39e4100a9019da9e4f632f6" }
-apkaudio-wireless-soundbase = { git = "https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.SOUNDbase", rev = "80616818f0ce2eb71f495aabf5193d1d1c657e62" }
+apkaudio-wireless-kernel = { git = "https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.CSV", rev = "6af4baa2c11a6ff6c7226ab3a45edd6a0c2dca79" }
+apkaudio-wireless-soundbase = { git = "https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.SOUNDbase", rev = "e3b968cc16ba264c13b971bf75d2992b1af7785d" }
 pdf-extract = "0.7"
 
 [dev-dependencies]

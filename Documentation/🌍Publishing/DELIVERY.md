@@ -3,7 +3,7 @@
 - **Repository:** https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.PDF (private), a
   submodule of the APK.audio monorepo at `PODS/POD.THIN/Softapps/DATATYPE/DATATYPE.wireless.PDF`.
 - **The worker:** image `worker-wireless-pdf:local`, built from this repository's `SRC/` alone by
-  `Docker/Dockerfile` (runner and contracts from APK.plugin.SDK `sdk-v0.7`; the wireless kernel and
+  `Docker/Dockerfile` (runner and contracts from APK.plugin.SDK `sdk-v0.9`; the wireless kernel and
   the SoundBase record from the private DATATYPE.wireless.CSV and DATATYPE.wireless.SOUNDbase by
   pinned rev, fetched with `APK_DEPS_TOKEN` as a BuildKit secret). It runs as `Worker-WIRELESS_PDF`
   in project `workers`, included by `PODS/POD.workers/Docker/docker-compose.yml`, on the broker's
@@ -47,3 +47,4 @@
 - **Tests at home** — `IMPORT.file.PDF/Tests/` with a one-page fixture PDF: STATUS is "stub", both converters raise on it, text extraction needs the engine (9 passed). NODE.BareMetal's `test_handler_status.py` stays as the consumer check (handoff filed so it puts the shared package on its path).
 - **No PYTHONPATH into NODE.BareMetal** — `Entry.py` no longer imports `importer_logging`; logging is `apk_wireless_import.log` (oaLogging when present, else nothing). The dependency is declared as a package by rev in `requirements.txt`.
 - **Doc drift and comment noise** — ARCHITECTURE's `display.json` row says what the file holds (no `app`), the `# Inline comment: Logic for …` lines are gone, and the header's moved paths are corrected.
+- **SDK `sdk-v0.9`; kernel `6af4baa`, SoundBase `e3b968c`; worker 0.2.0, importer 0.2.0** (PLAN-3432.01) — runner and contracts at `tag = "sdk-v0.9"`, the wireless kernel at DATATYPE.wireless.CSV `6af4baa` and the SoundBase record at DATATYPE.wireless.SOUNDbase `e3b968c` (both on `sdk-v0.9`, one kernel between them); `SRC/Cargo.lock` re-resolved minimally against GitHub, one `apkaudio-contracts`. Verified 2026-10-31: the tree alone (`git archive`, no `.cargo` patch), `cargo test --workspace --locked` — worker 8, parser 2, fixture 1 pass.

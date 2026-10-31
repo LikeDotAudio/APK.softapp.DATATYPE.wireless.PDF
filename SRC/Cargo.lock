@@ -26,7 +26,7 @@ checksum = "683d7910e743518b0e34f1186f92494becacb047c7b6bf616c96772180fef923"
 [[package]]
 name = "apk-plugin-runner"
 version = "0.1.0"
-source = "git+https://github.com/LikeDotAudio/APK.plugin.SDK?tag=sdk-v0.7#017faf3df6f49b79b18b0199d1df2a9987972580"
+source = "git+https://github.com/LikeDotAudio/APK.plugin.SDK?tag=sdk-v0.9#132cdae81b1a9a996c9a86fd94486510fe8e921d"
 dependencies = [
  "apkaudio-contracts",
  "libc",
@@ -36,7 +36,7 @@ dependencies = [
 
 [[package]]
 name = "apk-worker-wireless-pdf"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "apk-plugin-runner",
  "apkaudio-contracts",
@@ -48,8 +48,8 @@ dependencies = [
 
 [[package]]
 name = "apkaudio-contracts"
-version = "0.2.0"
-source = "git+https://github.com/LikeDotAudio/APK.plugin.SDK?tag=sdk-v0.7#017faf3df6f49b79b18b0199d1df2a9987972580"
+version = "0.3.0"
+source = "git+https://github.com/LikeDotAudio/APK.plugin.SDK?tag=sdk-v0.9#132cdae81b1a9a996c9a86fd94486510fe8e921d"
 dependencies = [
  "regress",
  "serde",
@@ -58,8 +58,8 @@ dependencies = [
 
 [[package]]
 name = "apkaudio-wireless-kernel"
-version = "0.1.0"
-source = "git+https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.CSV?rev=646e960e42ec13f2c39e4100a9019da9e4f632f6#646e960e42ec13f2c39e4100a9019da9e4f632f6"
+version = "0.2.0"
+source = "git+https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.CSV?rev=6af4baa2c11a6ff6c7226ab3a45edd6a0c2dca79#6af4baa2c11a6ff6c7226ab3a45edd6a0c2dca79"
 dependencies = [
  "apk-plugin-runner",
  "base64",
@@ -69,8 +69,8 @@ dependencies = [
 
 [[package]]
 name = "apkaudio-wireless-soundbase"
-version = "0.1.0"
-source = "git+https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.SOUNDbase?rev=80616818f0ce2eb71f495aabf5193d1d1c657e62#80616818f0ce2eb71f495aabf5193d1d1c657e62"
+version = "0.2.0"
+source = "git+https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.SOUNDbase?rev=e3b968cc16ba264c13b971bf75d2992b1af7785d#e3b968cc16ba264c13b971bf75d2992b1af7785d"
 dependencies = [
  "apkaudio-wireless-kernel",
  "csv",
@@ -79,7 +79,7 @@ dependencies = [
 
 [[package]]
 name = "apkaudio-wireless-soundbase-pdf"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "apkaudio-wireless-kernel",
  "apkaudio-wireless-soundbase",
