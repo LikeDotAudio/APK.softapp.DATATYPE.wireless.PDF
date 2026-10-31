@@ -35,6 +35,11 @@
   A `DATABASE.server.SQL` rebuild is no longer needed for Softapps since PLAN-3421.01. Commit in
   this repository, then bump the submodule pointer in APK.audio.
 
+## Delivered 2026-10-31: portable file names (no `:` `|` or case twins)
+
+- The monorepo now checks out on Windows and macOS: no tracked name holds `<>:"|?*`, a trailing dot or space, a device name or a case-only twin. Colon folders became dot folders (the POD.x convention).
+- Renamed: `IMPORT:file:PDF` → `IMPORT.file.PDF` (loaded by file path, so nothing imports the folder name). References to NODE.BareMetal `CORE.engine.RUST` / `TEST.runner.PYTHON` follow.
+
 ## Delivered from the 2026-10-30 audit
 
 - **One shared header row and lifecycle** — `MARKER_HEADERS` and `start`/`stop`/`status`/`run_tests` come from `apk_wireless_import` (DATATYPE.wireless.CSV/SRC/python, package `apk-wireless-import`), the one copy the IAS, PDF, Shure and CSV edges import; the three verbatim copies are gone. Verified by `Tests/test_entry.py` (the header row *is* the shared object).
