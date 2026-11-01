@@ -12,7 +12,7 @@
 # the same revs the SoundBase worker pins, so one copy of each in the lock.
 [package]
 name = "apkaudio-wireless-soundbase-pdf"
-version = "0.2.0"
+version = "2.0.0"
 edition = "2021"
 
 [lib]

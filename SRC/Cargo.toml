@@ -21,7 +21,7 @@
 # by pushed revs. The image builds from `SRC/` alone.
 [package]
 name = "apk-worker-wireless-pdf"
-version = "0.2.0"
+version = "2.0.0"
 edition = "2024"
 
 [workspace]
