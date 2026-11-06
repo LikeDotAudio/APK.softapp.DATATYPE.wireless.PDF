@@ -20,8 +20,8 @@ name = "apkaudio_wireless_soundbase_pdf"
 path = "src/lib.rs"
 
 [dependencies]
-apkaudio-wireless-kernel = { git = "https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.CSV", rev = "52e568551a2f07fef4ecbfd41c4f3d3718216f53" }
-apkaudio-wireless-soundbase = { git = "https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.SOUNDbase", rev = "fda307d924c964e334151b957d23af5fff5f6192" }
+apkaudio-wireless-kernel = { git = "https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.CSV", rev = "8b94322b1ae73bf3414ea69530b69980e6cd92d0" }
+apkaudio-wireless-soundbase = { git = "https://github.com/LikeDotAudio/APK.softapp.DATATYPE.wireless.SOUNDbase", rev = "303da7d6062feecff7caae2cf288b7f21d101b54" }
 pdf-extract = "0.7"
 
 [dev-dependencies]
