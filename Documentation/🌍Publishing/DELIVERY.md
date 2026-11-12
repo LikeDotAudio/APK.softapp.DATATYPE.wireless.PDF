@@ -53,5 +53,11 @@
 - **Doc drift and comment noise** — ARCHITECTURE's `display.json` row says what the file holds (no `app`), the `# Inline comment: Logic for …` lines are gone, and the header's moved paths are corrected.
 - **SDK `sdk-v0.9`; kernel `6af4baa`, SoundBase `e3b968c`; worker 0.2.0, importer 0.2.0** (PLAN-3432.01) — runner and contracts at `tag = "sdk-v0.9"`, the wireless kernel at DATATYPE.wireless.CSV `6af4baa` and the SoundBase record at DATATYPE.wireless.SOUNDbase `e3b968c` (both on `sdk-v0.9`, one kernel between them); `SRC/Cargo.lock` re-resolved minimally against GitHub, one `apkaudio-contracts`. Verified 2026-10-31: the tree alone (`git archive`, no `.cargo` patch), `cargo test --workspace --locked` — worker 8, parser 2, fixture 1 pass.
 
+## Delivered 2026-11-11 – 2026-11-12
+
+From this repository's own commits (the commit message is the record):
+
+- pin sdk-v2.4 and the providers re-released on it (ROAD-3731: contracts 2.4.0 published) (`c12fa9e`)
+
 ## Releases
 - **Released `2.0.0`, tag `v2.0.0`** (2026-11-01, ROAD-3452, the owner's V2) — on `sdk-v2.0` (contracts 2.0.0); every manifest says 2.0.0; GitHub release `v2.0.0`.
